@@ -16,7 +16,7 @@
   },
   "scripts": {
     "dev": "bun --watch src/server.ts",
-    "build": "bun build src/server.ts --outdir dist --target bun",
+    "build": "bun build src/server.ts --outdir dist --target bun --external pdfjs-dist",
     "start": "bun run build && bun dist/server.js"
   }
 }
