@@ -48,6 +48,7 @@ router.post("/extract-urls-from-pdf", async (req, res, next) => {
       pdf_url,
       url_count: result.urls.length,
       urls: result.urls,
+      all_urls: result.all_urls,
       meta: {
         page_count: result.page_count,
         pages_scanned: result.pages_scanned,
@@ -115,8 +116,17 @@ export async function extract_urls_from_pdf_buffer(
     }
   }
 
+  const urls = Array.from(found);
+
+  const commom_meeting_platforms = [
+    "choruscall",
+    "webex",
+    "zoom"
+  ];
+
   return {
-    urls: Array.from(found),
+    urls: urls.filter((u) => commom_meeting_platforms.some((p) => u.includes(p))),
+    all_urls: urls,
     page_count: pdf.numPages,
     pages_scanned: pagesToProcess,
   };
